@@ -27,12 +27,14 @@ using namespace std;
 const int gridRow = 25;
 const int gridCol = 25;
 const int multiplyRate = 10;
-const int vecLen = 4;//dimension number
-const int featureNum = 4;
+const int vecLen = 6;//dimension number
+const int featureNum = 6;
 const double xMax = 1280.0;
 const double yMax = 960.0;
+const double ori1max = 1.0;
+const double ori2max = 1.0;
 const double rriMax = 2.5;
 const double hfMax = 3.0;
-const double nodeMax[4] = {xMax,yMax,rriMax*2,hfMax*2};
+const double nodeMax[6] = {xMax,yMax,rriMax*2,hfMax*2};
 
 #endif

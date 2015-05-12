@@ -31,7 +31,7 @@ somTrain::somTrain()
                 {
                     double test1 = 1000.0;
                     
-                    if(k%4 == 1)
+                    if(k%6 == 1)
                     {
                         while(test1>320.0)
                         {
@@ -40,10 +40,20 @@ somTrain::somTrain()
                             test1 = sqrt((w[i][j][k-1]-600.0)*(w[i][j][0]-600.0)+(w[i][j][k]-480.0)*(w[i][j][1]-480.0));
                         }
                     }
-                        
-                    if(k%4 == 2)
+                    
+                    if(k%6 == 2)
+                        w[i][j][k] = (rand()/(double)RAND_MAX-0.5)*2;
+                    if(k%6 == 3)
+                    {
+                        if(rand()%2 == 0)
+                        w[i][j][k] = sqrt(1-w[i][j][k-1]*w[i][j][k-1]);
+                        else
+                        w[i][j][k] = -sqrt(1-w[i][j][k-1]*w[i][j][k-1]);
+
+                    }
+                    if(k%6 == 4)
                         w[i][j][k] = (rand()/(double)RAND_MAX-0.5)*2*2;
-                    if(k%4 == 3)
+                    if(k%6 == 5)
                         w[i][j][k] = (rand()/(double)RAND_MAX-0.5)*2*3;
                 }
             win[i][j]=0;
@@ -52,10 +62,11 @@ somTrain::somTrain()
     //data input
     
     stringstream ss;
-    char filename[256] = "person/person2/person2all.csv";
+    char filename[256] = "person/person2/person2face_all.csv";
     ss << filename;
     ifstream ifs(ss.str().c_str());
     int x1,y1;
+    int ori1,ori2;
     float RRI1,HF1;
     char split;
     long int count =0;
@@ -63,18 +74,20 @@ somTrain::somTrain()
     
     while(!ifs.eof())
     {
-        ifs >> x1 >> split >> y1 >> split >> RRI1 >> split >> HF1;
+        ifs >> x1 >> split >> y1 >> split >> ori1 >> split >> ori2 >> split >> RRI1 >> split >> HF1;
     
         if(ifs.fail())
             break;
         
         if(x1 != 0)
         {
-            vector<double> temp(4);
+            vector<double> temp(6);
             temp[0] = (double)x1;
             temp[1] = (double)y1;
-            temp[2] = (double)RRI1;
-            temp[3] = (double)HF1;
+            temp[2] = (double)ori1;
+            temp[3] = (double)ori2;
+            temp[4] = (double)RRI1;
+            temp[5] = (double)HF1;
             
             count ++;
         
@@ -230,7 +243,7 @@ void somTrain::computeInput(long int sampleNumber)
         {
             for(int k = 0; k < featureNum; k++)
             {
-                d[i][j] += sqrt(pow((w[i][j][k]/nodeMax[k%4] - input[sampleNumber][k]/nodeMax[k%4]), 2));
+                d[i][j] += sqrt(pow((w[i][j][k]/nodeMax[k%6] - input[sampleNumber][k]/nodeMax[k%6]), 2));
                 //cout << "D= " << d[i][j] << "\n";
             } // j
         }
