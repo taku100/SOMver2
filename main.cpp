@@ -13,27 +13,6 @@
 
 int main(int argc, const char * argv[])
 {
-//    Mat map = cv::Mat::zeros(multiplyRate*gridRow, multiplyRate*gridCol, CV_8UC3);
-//    for(int i=1;i<gridCol;i++)
-//    {
-//        cv::line(map, Point(i*multiplyRate,0), Point(i*multiplyRate,map.rows), Scalar(255,255,255));
-//    }
-//    for(int j=1;j<gridRow;j++)
-//    {
-//        cv::line(map, Point(0,j*multiplyRate), Point(map.cols,j*multiplyRate), Scalar(255,255,255));
-//    }
-//    
-//    for(int i=20;i<30;i++)
-//    {
-//        for(int j=10;j<20;j++)
-//        {
-//            map.at<Vec3b>(i,j)[0] =255;
-//            map.at<Vec3b>(i,j)[1] =255;
-//            map.at<Vec3b>(i,j)[2] = 0;
-//        }
-//    }
-//    imshow("test",map);
-//    waitKey(0);
     
     //投票された行動分類
     somVis pc;
@@ -46,13 +25,13 @@ int main(int argc, const char * argv[])
     somTrain train;
     train.training();
     
-    char *talkname = "all/person2/class1.csv";
+    char *talkname = "../all/person2/class1.csv";
     talk.vote(talkname, train);
-    char *eatname = "all/person2/class2.csv";
+    char *eatname = "../all/person2/class2.csv";
     eat.vote(eatname, train);
-    char *pcname = "all/person2/class3.csv";
+    char *pcname = "../all/person2/class3.csv";
     pc.vote(pcname, train);
-    char *phonename = "all/person2/class4.csv";
+    char *phonename = "../all/person2/class4.csv";
     phone.vote(phonename, train);
     
     

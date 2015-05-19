@@ -71,141 +71,61 @@ void somVis::visualize()
             if(cl>0.88)
             {
                 cv::rectangle( map, cv::Rect( j*multiplyRate, i*multiplyRate, multiplyRate,multiplyRate), color[8], -1, CV_AA );
-//                for(int k=i*multiplyRate;k<(i+1)*multiplyRate;k++)
-//                {
-//                    for(int l=j*multiplyRate;l<(j+1)*multiplyRate;l++)
-//                    {
-//                        map.at<Vec3b>(k,l)[0] = 0;  //B
-//                        map.at<Vec3b>(k,l)[1] = 0;  //G
-//                        map.at<Vec3b>(k,l)[2] = 255;  //R
-//                    }
-//                }
+
             }
             
             if(0.88 >= cl && cl > 0.77)
             {
                 cv::rectangle( map, cv::Rect( j*multiplyRate, i*multiplyRate, multiplyRate,multiplyRate), color[7], -1, CV_AA );
-//                for(int k=i*multiplyRate;k<(i+1)*multiplyRate;k++)
-//                {
-//                    for(int l=js*multiplyRate;l<(j+1)*multiplyRate;l++)
-//                    {
-//                        map.at<Vec3b>(k,l)[0] = 0;  //B
-//                        map.at<Vec3b>(k,l)[1] = 120;  //G
-//                        map.at<Vec3b>(k,l)[2] = 255;  //R
-//                    }
-//                }
+
             }
                 
             if(0.77 >= cl && cl > 0.66)
             {
                 cv::rectangle( map, cv::Rect( j*multiplyRate, i*multiplyRate, multiplyRate,multiplyRate), color[6], -1, CV_AA );
-//                for(int k=i*multiplyRate;k<(i+1)*multiplyRate;k++)
-//                {
-//                    for(int l=j*multiplyRate;l<(j+1)*multiplyRate;l++)
-//                    {
-//                        map.at<Vec3b>(k,l)[0] = 0;  //B
-//                        map.at<Vec3b>(k,l)[1] = 255;  //G
-//                        map.at<Vec3b>(k,l)[2] = 255;  //R
-//                    }
-//                }
+
             }
                 
             if(0.66 >= cl && cl > 0.55)
             {
                 cv::rectangle( map, cv::Rect( j*multiplyRate, i*multiplyRate, multiplyRate,multiplyRate), color[5], -1, CV_AA );
-//                for(int k=i*multiplyRate;k<(i+1)*multiplyRate;k++)
-//                {
-//                    for(int l=j*multiplyRate;l<(j+1)*multiplyRate;l++)
-//                    {
-//                        map.at<Vec3b>(k,l)[0] = 0;  //B
-//                        map.at<Vec3b>(k,l)[1] = 255;  //G
-//                        map.at<Vec3b>(k,l)[2] = 120;  //R
-//                    }
-//                }
+
             }
             
             if(0.55 >= cl && cl > 0.44)
             {
                 cv::rectangle( map, cv::Rect( j*multiplyRate, i*multiplyRate, multiplyRate,multiplyRate), color[4], -1, CV_AA );
-//                for(int k=i*multiplyRate;k<(i+1)*multiplyRate;k++)
-//                {
-//                    for(int l=j*multiplyRate;l<(j+1)*multiplyRate;l++)
-//                    {
-//                        map.at<Vec3b>(k,l)[0] = 0;  //B
-//                        map.at<Vec3b>(k,l)[1] = 255;  //G
-//                        map.at<Vec3b>(k,l)[2] = 0;  //R
-//                    }
-//                }
+
             }
                 
             if(0.44 >= cl && cl > 0.33)
             {
                 cv::rectangle( map, cv::Rect( j*multiplyRate, i*multiplyRate, multiplyRate,multiplyRate), color[3], -1, CV_AA );
-//                for(int k=i*multiplyRate;k<(i+1)*multiplyRate;k++)
-//                {
-//                    for(int l=j*multiplyRate;l<(j+1)*multiplyRate;l++)
-//                    {
-//                        map.at<Vec3b>(k,l)[0] = 120;  //B
-//                        map.at<Vec3b>(k,l)[1] = 255;  //G
-//                        map.at<Vec3b>(k,l)[2] = 0;  //R
-//                    }
-//                }
+
             }
                 
             if(0.33 >= cl && cl > 0.22)
             {
                 cv::rectangle( map, cv::Rect( j*multiplyRate, i*multiplyRate, multiplyRate,multiplyRate), color[2], -1, CV_AA );
-//                for(int k=i*multiplyRate;k<(i+1)*multiplyRate;k++)
-//                {
-//                    for(int l=j*multiplyRate;l<(j+1)*multiplyRate;l++)
-//                    {
-//                        map.at<Vec3b>(k,l)[0] = 255;  //B
-//                        map.at<Vec3b>(k,l)[1] = 255;  //G
-//                        map.at<Vec3b>(k,l)[2] = 0;  //R
-//                    }
-//                }
+
             }
                 
             if(0.22 >= cl && cl > 0.11)
             {
                 cv::rectangle( map, cv::Rect( j*multiplyRate, i*multiplyRate, multiplyRate,multiplyRate), color[1], -1, CV_AA );
-//                for(int k=i*multiplyRate;k<(i+1)*multiplyRate;k++)
-//                {
-//                    for(int l=j*multiplyRate;l<(j+1)*multiplyRate;l++)
-//                    {
-//                        map.at<Vec3b>(k,l)[0] = 255;  //B
-//                        map.at<Vec3b>(k,l)[1] = 120;  //G
-//                        map.at<Vec3b>(k,l)[2] = 0;  //R
-//                    }
-//                }
+
             }
                 
             if(0.11 >= cl && cl > 0.0)
             {
                 cv::rectangle( map, cv::Rect( j*multiplyRate, i*multiplyRate, multiplyRate,multiplyRate), color[0], -1, CV_AA );
-//                for(int k=i*multiplyRate;k<(i+1)*multiplyRate;k++)
-//                {
-//                    for(int l=j*multiplyRate;l<(j+1)*multiplyRate;l++)
-//                    {
-//                        map.at<Vec3b>(k,l)[0] = 255;  //B
-//                        map.at<Vec3b>(k,l)[1] = 0;  //G
-//                        map.at<Vec3b>(k,l)[2] = 0;  //R
-//                    }
-//                }
+
             }
                 
             if(cl == 0.0)
             {
                 cv::rectangle( map, cv::Rect( j*multiplyRate, i*multiplyRate, multiplyRate,multiplyRate), Scalar(0,0,0), -1, CV_AA );
-//                for(int k=i*multiplyRate;k<(i+1)*multiplyRate;k++)
-//                {
-//                    for(int l=j*multiplyRate;l<(j+1)*multiplyRate;l++)
-//                    {
-//                        map.at<Vec3b>(k,l)[0] = 0;  //B
-//                        map.at<Vec3b>(k,l)[1] = 0;  //G
-//                        map.at<Vec3b>(k,l)[2] = 0;  //R
-//                    }
-//                }
+
             }
             
         }
@@ -266,7 +186,6 @@ void somVis::vote(char *filename,somTrain &som)
                 {
                     temp2 += sqrt((som.w[i][j][k]/nodeMax[k]-input[z][k]/nodeMax[k])*(som.w[i][j][k]/nodeMax[k]-input[z][k]/nodeMax[k]));
                 }
-                //cout << temp2 << endl;
                 
                 if(temp2<distance)
                 {

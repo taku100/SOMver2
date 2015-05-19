@@ -14,6 +14,8 @@
 
 somTrain::somTrain()
 {
+    //init
+    
     maxClusters = gridRow * gridCol;
     decayRate = 0.96;
     minAlpha = 0.01;
@@ -62,7 +64,7 @@ somTrain::somTrain()
     //data input
     
     stringstream ss;
-    char filename[256] = "person/person2/person2face_all.csv";
+    char filename[256] = "../person/person2/person2face_all.csv";
     ss << filename;
     ifstream ifs(ss.str().c_str());
     int x1,y1;
@@ -112,6 +114,7 @@ void somTrain::training()
     
     int iterations = 0;
     
+    //winning node cordinates
     int labelrow = 0;
     int labelcol = 0;
     
@@ -121,9 +124,7 @@ void somTrain::training()
         for(int sampleNumber = 0; sampleNumber < sampleNum; sampleNumber++)
         {
             
-            
-            
-            //Compute input.
+            //Compute input. fix distance(d[][])
             computeInput(sampleNumber);
             double dMin = 1000000;
             

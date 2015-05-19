@@ -25,6 +25,7 @@ public:
     Mat map;
     Mat frame;
     cv::Scalar color[9];
+    cv::Mat histgrams[gridRow*gridCol];
     
     int actionVote[gridRow][gridCol];
     void vote(char *filename,somTrain &som);
