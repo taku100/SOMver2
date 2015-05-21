@@ -168,10 +168,12 @@ void somTrain::training()
             
             if(iterations == 101)
             {
+                double locnorm = 0.0;
                 for(int i=0;i<gridRow;i++)
                 {
                     for(int j=0;j<gridCol;j++)
                     {
+                        
                         if(i == labelrow && j == labelcol)
                             win[i][j] += 1;
                     }

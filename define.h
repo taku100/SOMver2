@@ -24,8 +24,8 @@
 using namespace cv;
 using namespace std;
 
-const int gridRow = 5;
-const int gridCol = 5;
+const int gridRow = 25;
+const int gridCol = 25;
 const int multiplyRate = 10;
 const int featureNum = 6;//dimension number
 const double xMax = 1280.0;

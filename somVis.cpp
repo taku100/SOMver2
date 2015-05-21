@@ -11,6 +11,19 @@
 
 somVis::somVis()
 {
+    
+    //各グリッドのヒストグラムイメージ
+    for(int i=0;i<gridRow;i++)
+    {
+        for(int j=0;j<gridCol;j++)
+        {
+            Mat hist_img(Size(smMap_width,smMap_height*2),CV_8UC3,Scalar::all(255));
+            histgrams.push_back(hist_img);
+        }
+    }
+    
+    histMap = cv::Mat::zeros(smMap_height*2*gridRow, smMap_width*gridCol, CV_8UC3);
+    
     color[0] = Scalar(255,0,0);
     color[1] = Scalar(255,120,0);
     color[2] = Scalar(255,255,0);
@@ -206,6 +219,41 @@ void somVis::vote(char *filename,somTrain &som)
             cout << actionVote[i][j]<< "  ";
         }
         cout << endl;
+    }
+    
+}
+
+void somVis::histgram(somTrain &train)
+{
+    int count = 0;
+    for(int i = 0;i<gridRow;i++)
+    {
+        for(int j=0;j<gridCol;j++)
+        {
+            for(int k = 0;k<featureNum;k++)
+            {
+                cv::rectangle(histgrams[count], Point(k*smMap_width/featureNum,smMap_height), Point((k+1)*smMap_width/featureNum-1,smMap_height+(-1)*smMap_height*train.w[i][j][k]/nodeMax[k]), Scalar(0,255,0));
+                
+            }
+            
+            Rect rect(j*smMap_width,i*smMap_height*2,smMap_width,smMap_height*2);
+            Mat subdst = histMap(rect);
+            histgrams[count].copyTo(subdst);
+            count++;
+            
+        }
+    }
+    
+    for(int i = 0;i < gridRow*smMap_height*2;i++)
+    {
+        for(int j =0;j<gridCol*smMap_width;j++)
+        {
+            if(i%(smMap_height*2) == 0)
+                histMap.at<Vec3b>(i,j) = 0;
+            
+            else if(j%smMap_width == 0)
+                histMap.at<Vec3b>(i,j) = 0;
+        }
     }
     
 }

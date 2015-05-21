@@ -22,15 +22,23 @@ public:
     somVis();
     ~somVis();
     
+    
     Mat map;
     Mat frame;
     cv::Scalar color[9];
-    cv::Mat histgrams[gridRow*gridCol];
+    Mat histMap;
+    const int smMap_width = 96;
+    const int smMap_height = 48;
+    
+    vector<cv::Mat> histgrams;
+    
     
     int actionVote[gridRow][gridCol];
     void vote(char *filename,somTrain &som);
     
     void visualize();
+    
+    void histgram(somTrain &train);
     
 };
 
