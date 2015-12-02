@@ -15,6 +15,8 @@
 class somTrain {
 private:
     
+    vector<int> time_id_vec;
+    
 public:
     somTrain();
     ~somTrain();
@@ -39,10 +41,12 @@ public:
     
     double sigma;
     
-    void training();
+    void training(string output_directory);
     //void testing();
     void computeInput(long int sampleNumber);
     double minimum(double valueA, double valueB);
+    
+    
 };
 
 #endif /* defined(__SOMver1__somTrain__) */

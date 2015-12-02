@@ -145,15 +145,27 @@ void somVis::visualize()
         
     }
     
+    //投票数表示
+    for(int i=0;i < gridRow;i++)
+    {
+        for(int j=0;j < gridCol;j++)
+        {
+            char text[10];
+            sprintf(text,"%d",actionVote[i][j]);
+            cv::putText(map, text, Point(j*multiplyRate+multiplyRate/5,i*multiplyRate+multiplyRate/2), FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255,255,255));
+        }
+    }
     
 }
 
 void somVis::vote(char *filename,somTrain &som)
 {
     ifstream ifs(filename);
-    int x,y;
+    //int x,y;
+    int id_num;
+    double x,y;
     int ori1,ori2;
-    double RRI,HF;
+    double rri_raw,rri_std;
     char split;
     long int count = 0;
     vector< vector<double> > input;
@@ -161,20 +173,22 @@ void somVis::vote(char *filename,somTrain &som)
     
     while(!ifs.eof())
     {
-        ifs >> x >> split >> y >> split >> ori1 >> split >> ori2 >> split >> RRI >> split >> HF;
+        ifs >> id_num >> split >> x >> split >> y >> split >> ori1 >> split >> ori2 >> split >> rri_raw >> split >> rri_std;
+        
+        
         
         if(ifs.fail())
             break;
         
         if(x != 0)
         {
-            vector<double> temp(4);
+            vector<double> temp(5);
             temp[0] = (double)x;
             temp[1] = (double)y;
             temp[2] = (double)ori1;
             temp[3] = (double)ori2;
-            temp[4] = (double)RRI;
-            temp[5] = (double)HF;
+            temp[4] = (double)rri_std;
+            //temp[5] = (double)HF;
             
             count ++;
             
@@ -195,7 +209,8 @@ void somVis::vote(char *filename,somTrain &som)
             for(int j=0;j<gridCol;j++)
             {
                 double temp2 = 0.0;
-                for(int k=0;k<featureNum;k++)
+                //for(int k=0;k<featureNum;k++)
+                for(int k=0;k<5;k++)
                 {
                     temp2 += sqrt((som.w[i][j][k]/nodeMax[k]-input[z][k]/nodeMax[k])*(som.w[i][j][k]/nodeMax[k]-input[z][k]/nodeMax[k]));
                 }
@@ -232,8 +247,8 @@ void somVis::histgram(somTrain &train)
         {
             for(int k = 0;k<featureNum;k++)
             {
-                cv::rectangle(histgrams[count], Point(k*smMap_width/featureNum,smMap_height), Point((k+1)*smMap_width/featureNum-1,smMap_height+(-1)*smMap_height*train.w[i][j][k]/nodeMax[k]), Scalar(0,255,0));
-                
+//                cv::rectangle(histgrams[count], Point(k*smMap_width/featureNum,smMap_height), Point((k+1)*smMap_width/featureNum-1,smMap_height+(-1)*smMap_height*train.w[i][j][k]/nodeMax[k]), Scalar(0,0,0),-1);
+                cv::rectangle(histgrams[count], Point(k*smMap_width/featureNum,smMap_height), Point((k+1)*smMap_width/featureNum-1,smMap_height+(-1)*smMap_height*train.w[i][j][k]/2), Scalar(0,0,0),-1);
             }
             
             Rect rect(j*smMap_width,i*smMap_height*2,smMap_width,smMap_height*2);

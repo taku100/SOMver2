@@ -11,7 +11,6 @@
 
 #include <opencv2/opencv.hpp>
 #include <iostream>
-#include <iostream>
 #include <iomanip>
 #include <cmath>
 #include <time.h>
@@ -20,13 +19,16 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include <time.h>
+#include <sys/stat.h>
+
 
 using namespace cv;
 using namespace std;
 
-const int gridRow = 25;
-const int gridCol = 25;
-const int multiplyRate = 10;
+const int gridRow = 5;
+const int gridCol = 5;
+const int multiplyRate = 50;//default 10
 const int featureNum = 6;//dimension number
 const double xMax = 1280.0;
 const double yMax = 960.0;
@@ -35,5 +37,10 @@ const double ori2max = 1.0;
 const double rriMax = 2.5;
 const double hfMax = 3.0;
 const double nodeMax[6] = {xMax,yMax,ori1max,ori2max,rriMax*2,hfMax*2};
+
+const double stdX = 110.9927733;
+const double stdY = 68.8386322;
+const double x_ave = 391.4141151;
+const double y_ave = 468.164867;
 
 #endif
