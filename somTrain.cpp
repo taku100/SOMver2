@@ -23,181 +23,263 @@ somTrain::somTrain()
     sigma = 1.0;
     
     //int tm=0;
-
     
     srand((unsigned int)time(NULL));
-
     
-    for(int i=0;i<gridRow;i++)
+    cout << "SELECT MODE" << endl;
+    cout << "1:all(x,y,face_ori1,face_ori2,rri_raw,rri_std)" << endl;
+    cout << "2:locatin(x,y)" << endl;
+    cout << "3:face_ori1,face_ori2" << endl;
+    cout << "4:rri_raw,rri_std" << endl;
+    cin >> mode;
+    
+    if( mode == 1 )
     {
-        for(int j=0;j<gridCol;j++)
+        //--------node initialization--------------
+        for(int i=0;i<gridRow;i++)
         {
-//                for(int k=0;k<featureNum;k++)
-//                {
-//                    double test1 = 1000.0;
-//                    
-//                    if(k%6 == 1)
-//                    {
-//                        while(test1>320.0)
-//                        {
-//                            w[i][j][k-1] = (rand()/(double)RAND_MAX)*1200;
-//                            w[i][j][k] = (rand()/(double)RAND_MAX)*960;
-//                            test1 = sqrt((w[i][j][k-1]-600.0)*(w[i][j][0]-600.0)+(w[i][j][k]-480.0)*(w[i][j][1]-480.0));
-//                        }
-//                    }
-//                    
-//                    if(k%6 == 2)
-//                        w[i][j][k] = (rand()/(double)RAND_MAX-0.5)*2;
-//                    if(k%6 == 3)
-//                    {
-//                        if(rand()%2 == 0)
-//                        w[i][j][k] = sqrt(1-w[i][j][k-1]*w[i][j][k-1]);
-//                        else
-//                        w[i][j][k] = -sqrt(1-w[i][j][k-1]*w[i][j][k-1]);
-//
-//                    }
-//                    if(k%6 == 4)
-//                        w[i][j][k] = (rand()/(double)RAND_MAX-0.5)*2*2;
-//                    if(k%6 == 5)
-//                        w[i][j][k] = (rand()/(double)RAND_MAX-0.5)*2*3;
-//                    
-//                    
-//
-//                }
-            
-            w[i][j][0] = (rand()/(double)RAND_MAX-0.5)*2.0; //-1〜1
-            w[i][j][1] = (rand()/(double)RAND_MAX-0.5)*2.0; //-1〜1
-//            tm = rand();
-//            if(tm%4 == 0)
-//            {
-//                w[i][j][2] = -1;
-//                w[i][j][3] =0;
-//            }
-//            else if(tm%4 == 1)
-//            {
-//                w[i][j][2] = 0;
-//                w[i][j][3] =1;
-//            }
-//            else if(tm%4 == 2)
-//            {
-//                w[i][j][2] = 0;
-//                w[i][j][3] =-1;
-//            }
-//            else if(tm%4 == 3)
-//            {
-//                w[i][j][2] = 1;
-//                w[i][j][3] =0;
-//            }
-            
-            w[i][j][2] = (rand()/(double)RAND_MAX-0.5)*2.0;
-            
-            if(rand()%2 == 0)
-                w[i][j][3] = sqrt(1-w[i][j][2]*w[i][j][2]);
-            else
-                w[i][j][3] = -sqrt(1-w[i][j][2]*w[i][j][2]);
-            
-            w[i][j][4] = (rand()/(double)RAND_MAX-0.5)*2.0;
-            
-            w[i][j][5] = (rand()/(double)RAND_MAX-0.5)*2.0;
-            
-            
-            win[i][j]=0;
+            for(int j=0;j<gridCol;j++)
+            {
+                
+                w[i][j][0] = (rand()/(double)RAND_MAX-0.5)*2.0; //-1〜1
+                w[i][j][1] = (rand()/(double)RAND_MAX-0.5)*2.0; //-1〜1
+                w[i][j][2] = (rand()/(double)RAND_MAX-0.5)*2.0;
+                
+                if(rand()%2 == 0)
+                    w[i][j][3] = sqrt(1-w[i][j][2]*w[i][j][2]);
+                else
+                    w[i][j][3] = -sqrt(1-w[i][j][2]*w[i][j][2]);
+                
+                w[i][j][4] = (rand()/(double)RAND_MAX-0.5)*2.0;
+                
+                w[i][j][5] = (rand()/(double)RAND_MAX-0.5)*2.0;
+                
+                
+                win[i][j]=0;
+            }
         }
-    }
-    //data input
-    
-    stringstream ss;
-    char filename[256] = "../20151028/allData_std_lp.csv";
-    ss << filename;
-    ifstream ifs(ss.str().c_str());
-    
-    //----new
-    int time_id;
-    float x1,y1;
-    float rri_raw,rri_std;
-    float rri_lp;
-    
-    //----new-----end
-    
-    //int x1,y1;
-    int ori1,ori2;
-    //float RRI1,HF1;
-    char split;
-    long int count =0;
-    long int valid =0;
-    
-    
-    
-    //select mode
-    //mode 1: x,y,ori1,ori2,RRI,HF
-    //mode 2: x,y,ori1,ori2,RRI,HF
-    //mode 3: x,y,ori1,ori2,RRI,HF
-    //mode 4: x,y,ori1,ori2,RRI,HF
-    //mode 5: x,y,ori1,ori2,RRI,HF
-    
-    
-    while(!ifs.eof())
-    {
-    
-        ifs >> time_id >> split >> x1 >> split >> y1 >> split >> ori1 >> split >> ori2 >> split >> rri_raw >> split >> rri_std >> split >> rri_lp;
         
-        if(ifs.fail())
-            break;
         
-        if(x1 != 0)
+        //--------data input------------------------
+        stringstream ss;
+        char filename[256] = "../20151028/allData_std_lp.csv";
+        ss << filename;
+        ifstream ifs(ss.str().c_str());
+        
+        int time_id;
+        float x1,y1;
+        float rri_raw,rri_std;
+        float rri_lp;
+        int ori1,ori2;
+        char split;
+        long int count =0;
+        long int valid =0;
+        
+        while(!ifs.eof())
         {
+            
+            ifs >> time_id >> split >> x1 >> split >> y1 >> split >> ori1 >> split >> ori2 >> split >> rri_raw >> split >> rri_std >> split >> rri_lp;
+            
+            if(ifs.fail())
+                break;
+            
+            if(x1 != 0)
+            {
+                time_id_vec.push_back(time_id);
+                
+                //----------all-----------------
+                
+                vector<double> temp(6);
+                temp[0] = (double)x1;
+                temp[1] = (double)y1;
+                temp[2] = (double)ori1;
+                temp[3] = (double)ori2;
+                temp[4] = (double)rri_std;
+                temp[5] = (double)rri_lp;
+                
+                count ++;
+                
+                input.push_back(temp);
+                validNum.push_back(valid);
+                
+            }
+            valid++;
+        }
+        cout << "input size = " << input.size() << endl;
+        sampleNum = input.size();
+        
+    }
+    
+    else if(mode == 2)
+    {
+        //node initialization
+        for(int i=0;i<gridRow;i++)
+        {
+            for(int j=0;j<gridCol;j++)
+            {
+                w[i][j][0] = (rand()/(double)RAND_MAX-0.5)*2.0; //-1〜1
+                w[i][j][1] = (rand()/(double)RAND_MAX-0.5)*2.0; //-1〜1
+                
+                win[i][j]=0;
+            }
+        }
+        
+        //--------data input------------------------
+        stringstream ss;
+        char filename[256] = "../input/training/location/loc_all.csv";
+        ss << filename;
+        ifstream ifs(ss.str().c_str());
+        
+        int time_id;
+        int x,y;
+        float x_std,y_std;
+        char split;
+        long int count =0;
+        long int valid =0;
+        
+        while(!ifs.eof())
+        {
+            
+            ifs >> time_id >> split >> x >> split >> y >> split >> x_std >> split >> y_std;
+            
+            if(ifs.fail())
+                break;
+            
+            if(x != 0)
+            {
+                time_id_vec.push_back(time_id);
+                
+                vector<double> temp(2);
+                temp[0] = (double)x_std;
+                temp[1] = (double)y_std;
+                
+                count ++;
+                
+                input.push_back(temp);
+                validNum.push_back(valid);
+    
+            }
+            valid++;
+        }
+        cout << "input size = " << input.size() << endl;
+        sampleNum = input.size();
+    }
+    
+    else if(mode == 3)
+    {
+        //node initialization
+        for(int i=0;i<gridRow;i++)
+        {
+            for(int j=0;j<gridCol;j++)
+            {
+                w[i][j][0] = (rand()/(double)RAND_MAX-0.5)*2.0;
+                
+                if(rand()%2 == 0)
+                    w[i][j][1] = sqrt(1-w[i][j][0]*w[i][j][0]);
+                else
+                    w[i][j][1] = -sqrt(1-w[i][j][0]*w[i][j][0]);
+                
+                win[i][j]=0;
+            }
+        }
+        
+        //--------data input------------------------
+        stringstream ss;
+        char filename[256] = "../input/training/face_ori/face_ori_all.csv";
+        ss << filename;
+        ifstream ifs(ss.str().c_str());
+        
+        int time_id;
+        float ori1,ori2;
+        char split;
+        long int count =0;
+        long int valid =0;
+        
+        while(!ifs.eof())
+        {
+            
+            ifs >> time_id >> split >> ori1 >> split >> ori2;
+            
+            if(ifs.fail())
+                break;
+        
             time_id_vec.push_back(time_id);
             
-            //----------all-----------------
-            
-            vector<double> temp(6);
-            temp[0] = (double)x1;
-            temp[1] = (double)y1;
-            temp[2] = (double)ori1;
-            temp[3] = (double)ori2;
-            temp[4] = (double)rri_std;
-            temp[5] = (double)rri_lp;
+            vector<double> temp(2);
+            temp[0] = (double)ori1;
+            temp[1] = (double)ori2;
             
             count ++;
-        
+            
             input.push_back(temp);
             validNum.push_back(valid);
             
-            //---------all end---------------
-            
-            
-            //---------location--------------
-            
-            //            vector<double> temp(2);
-            //            temp[0] = (double)x1;
-            //            temp[1] = (double)y1;
-            
-            //---------location end----------
-            
-            
-            //---------face ori--------------
-            
-            //            vector<double> temp(2);
-            //            temp[0] = (double)ori1;
-            //            temp[1] = (double)ori2;
-            
-            //---------face ori end----------
-            
-            //---------rri lp----------------
-            
-            //            vector<double> temp(2);
-            //            temp[0] = (double)rri_std;
-            //            temp[1] = (double)rri_lp;
-            
-            //---------rri lp end------------
-            
-            
-            
+            valid++;
         }
-        valid++;
+        cout << "input size = " << input.size() << endl;
+        sampleNum = input.size();
+        
     }
-    cout << "input size = " << input.size() << endl;
-    sampleNum = input.size();
+    
+    else if(mode == 4)
+    {
+        //node initialization
+        for(int i=0;i<gridRow;i++)
+        {
+            for(int j=0;j<gridCol;j++)
+            {
+                w[i][j][0] = (rand()/(double)RAND_MAX-0.5)*2.0; //-1〜1
+                w[i][j][1] = (rand()/(double)RAND_MAX-0.5)*2.0; //-1〜1
+                
+                win[i][j]=0;
+            }
+        }
+        
+        //--------data input------------------------
+        stringstream ss;
+        char filename[256] = "../input/training/rri_lp/rri_lp_all.csv";
+        ss << filename;
+        ifstream ifs(ss.str().c_str());
+        
+        int time_id;
+        float rri_raw,rri_std,rri_lp;
+        char split;
+        long int count =0;
+        long int valid =0;
+        
+        while(!ifs.eof())
+        {
+            
+            ifs >> time_id >> split >> rri_raw >> split >> rri_std >> split >> rri_lp;
+            
+            if(ifs.fail())
+                break;
+            
+            time_id_vec.push_back(time_id);
+            
+            vector<double> temp(2);
+            temp[0] = (double)rri_std;
+            temp[1] = (double)rri_lp;
+            
+            count ++;
+            
+            input.push_back(temp);
+            validNum.push_back(valid);
+            
+            valid++;
+        }
+        cout << "input size = " << input.size() << endl;
+        sampleNum = input.size();
+        
+    }
+    
+    else
+    {
+        cout << "MODE SELECT UNCOMPLETED" << endl;
+    }
+    
+    
+    
     
 }
 
@@ -222,7 +304,7 @@ void somTrain::training(string output_directory)
     cin >> yorn;
     
     stringstream oss;
-    oss << output_directory << "/all_vote6re.csv";
+    oss << output_directory << "/all_vote.csv";
     ofstream all_vote(oss.str().c_str());
     
     if(yorn != 'y')
@@ -283,43 +365,46 @@ void somTrain::training(string output_directory)
             //---FINAL MAP
             if(iterations == 101)
             {
-                double x_ave = 391.4141151;
-                double y_ave = 468.164867;
-                double rri_ave = 0.84801309;
-                double stdX = 110.9927733;
-                double stdY = 68.8386322;
-                double stdRRI = 0.113147914;
-                
-                
+                                
                 //data output
                 
                 if(yorn == 'y')
                 {
                     
                     //-----------all--------------
-                    
-                    all_vote << time_id_vec[sampleNumber] << "," << input[sampleNumber][0]*stdX+x_ave << "," << input[sampleNumber][1]*stdY+y_ave << "," << input[sampleNumber][2] << "," << input[sampleNumber][3]  << "," << input[sampleNumber][4]*stdRRI+rri_ave  << "," << input[sampleNumber][5] << labelcol+1 << "," << labelrow+1 <<endl;
+                    if(mode == 1)
+                    {
+                        
+                        all_vote << time_id_vec[sampleNumber] << "," << input[sampleNumber][0]*stdX+x_ave << "," << input[sampleNumber][1]*stdY+y_ave << "," << input[sampleNumber][2] << "," << input[sampleNumber][3]  << "," << input[sampleNumber][4]*stdRRI+rri_ave  << "," << input[sampleNumber][5] << "," << labelcol+1 << "," << labelrow+1 <<endl;
+                        
+                    }
                     
                     //-----------all end----------
                     
                     
                     
                     //---------location--------------
-                    
-//                    all_vote << time_id_vec[sampleNumber] << "," << input[sampleNumber][0]*stdX+x_ave << "," << input[sampleNumber][1]*stdY+y_ave << "," << labelcol+1 << "," << labelrow+1 <<endl;
+                    if(mode == 2)
+                    {
+                        all_vote << time_id_vec[sampleNumber] << "," << input[sampleNumber][0]*stdX+x_ave << "," << input[sampleNumber][1]*stdY+y_ave << "," << labelcol+1 << "," << labelrow+1 <<endl;
+                    }
                     
                     //---------location end----------
                     
                     
                     //---------face ori--------------
-                    
-//                    all_vote << input[sampleNumber][0] << "," << input[sampleNumber][1] << "," << labelcol+1 << "," << labelrow+1 <<endl;
+                    if(mode == 3)
+                    {
+                        all_vote << input[sampleNumber][0] << "," << input[sampleNumber][1] << "," << labelcol+1 << "," << labelrow+1 <<endl;
+                    }
                     
                     //---------face ori end----------
                     
                     //---------rri lp----------------
-                    
-//                    all_vote << time_id_vec[sampleNumber] << ","  << input[sampleNumber][0]*stdRRI+rri_ave  << "," << input[sampleNumber][1] << "," << labelcol+1 << "," << labelrow+1 <<endl;
+                    if(mode == 4)
+                    {
+                        all_vote << time_id_vec[sampleNumber] << ","  << input[sampleNumber][0]*stdRRI+rri_ave  << "," << input[sampleNumber][1] << "," << labelcol+1 << "," << labelrow+1 <<endl;
+                    }
                     
                     //---------rri lp end------------
                     
@@ -357,7 +442,34 @@ void somTrain::training(string output_directory)
         
     } while(alpha > minAlpha);
     
+    stringstream wss;
+    wss << output_directory << "/node.csv";
+    ofstream node(wss.str().c_str());
     
+    if(mode == 1)
+    {
+        node << "x_ave" << "," << x_ave << endl;
+        node << "y_ave" << "," << y_ave << endl;
+        node << "rri_ave" << "," << rri_ave << endl;
+        node << "x_std" << "," << stdX << endl;
+        node << "y_std" << "," << stdY << endl;
+        node << "rri_std" << "," << stdRRI << endl;
+        
+    }
+    
+    else if(mode == 2)
+    {
+        node << "x_ave" << "," << x_ave << endl;
+        node << "y_ave" << "," << y_ave << endl;
+        node << "x_std" << "," << stdX << endl;
+        node << "y_std" << "," << stdY << endl;
+    }
+    
+    else if(mode == 4)
+    {
+        node << "rri_ave" << "," << rri_ave << endl;
+        node << "rri_std" << "," << stdRRI << endl;
+    }
     
     for(int i=0;i<gridRow;i++)
     {
@@ -368,6 +480,13 @@ void somTrain::training(string output_directory)
             for(int k=0;k<featureNum;k++)
             {
                 cout << " " <<w[i][j][k] << " ";
+                
+                node << w[i][j][k];
+                
+                if(k == featureNum-1)
+                    node << endl;
+                else if(k != featureNum-1)
+                    node << ",";
             }
             cout << "}";
         }

@@ -160,12 +160,12 @@ void somVis::visualize()
 
 void somVis::vote(char *filename,somTrain &som)
 {
+    
     ifstream ifs(filename);
-    //int x,y;
     int id_num;
     double x,y;
     int ori1,ori2;
-    double rri_raw,rri_std;
+    double rri_raw,rri_std,rri_lp;
     char split;
     long int count = 0;
     vector< vector<double> > input;
@@ -173,26 +173,63 @@ void somVis::vote(char *filename,somTrain &som)
     
     while(!ifs.eof())
     {
-        ifs >> id_num >> split >> x >> split >> y >> split >> ori1 >> split >> ori2 >> split >> rri_raw >> split >> rri_std;
-        
-        
+        ifs >> id_num >> split >> x >> split >> y >> split >> ori1 >> split >> ori2 >> split >> rri_raw >> split >> rri_std >> split >> rri_lp;
         
         if(ifs.fail())
             break;
         
-        if(x != 0)
+        if(som.mode == 1)
         {
-            vector<double> temp(5);
+            
+            if(x != 0)
+            {
+                vector<double> temp(6);
+                temp[0] = (double)x;
+                temp[1] = (double)y;
+                temp[2] = (double)ori1;
+                temp[3] = (double)ori2;
+                temp[4] = (double)rri_std;
+                temp[5] = (double)rri_lp;
+                
+                count ++;
+                
+                input.push_back(temp);
+            }
+        }
+        
+        if(som.mode == 2)
+        {
+            vector<double> temp(2);
             temp[0] = (double)x;
             temp[1] = (double)y;
-            temp[2] = (double)ori1;
-            temp[3] = (double)ori2;
-            temp[4] = (double)rri_std;
-            //temp[5] = (double)HF;
             
             count ++;
             
             input.push_back(temp);
+
+        }
+        
+        if(som.mode == 3)
+        {
+            vector<double> temp(2);
+            temp[0] = (double)ori1;
+            temp[1] = (double)ori2;
+            
+            count ++;
+            
+            input.push_back(temp);
+            
+        }
+        
+        if(som.mode == 4)
+        {
+            vector<double> temp(2);
+            temp[0] = (double)rri_std;
+            temp[1] = (double)rri_lp;
+            count ++;
+            
+            input.push_back(temp);
+            
         }
         
     }
@@ -209,10 +246,9 @@ void somVis::vote(char *filename,somTrain &som)
             for(int j=0;j<gridCol;j++)
             {
                 double temp2 = 0.0;
-                //for(int k=0;k<featureNum;k++)
-                for(int k=0;k<5;k++)
+                for(int k=0;k<featureNum;k++)
                 {
-                    temp2 += sqrt((som.w[i][j][k]/nodeMax[k]-input[z][k]/nodeMax[k])*(som.w[i][j][k]/nodeMax[k]-input[z][k]/nodeMax[k]));
+                    temp2 += sqrt((som.w[i][j][k]-input[z][k])*(som.w[i][j][k]-input[z][k]));
                 }
                 
                 if(temp2<distance)

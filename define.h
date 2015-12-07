@@ -29,7 +29,7 @@ using namespace std;
 const int gridRow = 5;
 const int gridCol = 5;
 const int multiplyRate = 50;//default 10
-const int featureNum = 6;//dimension number
+const int featureNum = 2;//dimension number   1(all): 6, 2(location): 2, 3(face_ori): 2,4(rri): 2
 const double xMax = 1280.0;
 const double yMax = 960.0;
 const double ori1max = 1.0;
@@ -42,5 +42,9 @@ const double stdX = 110.9927733;
 const double stdY = 68.8386322;
 const double x_ave = 391.4141151;
 const double y_ave = 468.164867;
+const double rri_ave = 0.84801309;
+const double stdRRI = 0.113147914;
+
+
 
 #endif

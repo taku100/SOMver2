@@ -17,10 +17,12 @@ private:
     
     vector<int> time_id_vec;
     
+    
 public:
     somTrain();
     ~somTrain();
     
+    int mode;
     int maxClusters;
     long int sampleNum; //sample number
     double decayRate;

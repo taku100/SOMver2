@@ -39,7 +39,7 @@ int main(int argc, const char * argv[])
     
     output_dir << "../output/" << n_time.str().c_str();
     
-    mkdir(output_dir.str().c_str(), S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH | S_IXOTH);
+    
 
     
     //投票された行動分類
@@ -50,9 +50,29 @@ int main(int argc, const char * argv[])
     
     somVis all;
     
-    
-    
     somTrain train;
+    
+    if(train.mode == 1)
+    {
+        output_dir << "all";
+    }
+    else if(train.mode == 2)
+    {
+        output_dir << "location";
+    }
+    else if(train.mode == 3)
+    {
+        output_dir << "face_ori";
+    }
+    else if(train.mode == 4)
+    {
+        output_dir << "rri";
+    }
+    
+    
+    mkdir(output_dir.str().c_str(), S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH | S_IXOTH);
+    
+    
     train.training(output_dir.str().c_str());
     char winname[25];
     all.histgram(train);
@@ -67,47 +87,59 @@ int main(int argc, const char * argv[])
         }
     }
     
-    //---------------show & write png file
+    //---------------show & write all png file
     
     stringstream imgAll;
     imgAll << output_dir.str().c_str() << "/all.png";
     imshow("all", all.histMap);
     imwrite(imgAll.str().c_str(), all.histMap);
     
-    char *talkname = "../20151126/std/class1.csv";
-    talk.vote(talkname, train);
-    char *eatname = "../20151126/std/class2.csv";
-    eat.vote(eatname, train);
-    char *pcname = "../20151126/std/class3.csv";
-    pc.vote(pcname, train);
-    char *phonename = "../20151126/std/class4.csv";
-    phone.vote(phonename, train);
+    //---------------show tag vote
+    char yn;
+    cout << "want tag vote? y or n?" << endl;
+    cin >> yn;
     
+    if(yn == 'y')
+    {
+        char *talkname = "../input/all_std_lp/class1.csv";
+        talk.vote(talkname, train);
+        char *eatname = "../input/all_std_lp/class2.csv";
+        eat.vote(eatname, train);
+        char *pcname = "../input/all_std_lp/class3.csv";
+        pc.vote(pcname, train);
+        char *phonename = "../input/all_std_lp/class4.csv";
+        phone.vote(phonename, train);
+        
+        
+        talk.visualize();
+        eat.visualize();
+        pc.visualize();
+        phone.visualize();
+        
+        stringstream imgTalk;
+        imgTalk << output_dir.str().c_str() << "/talkSOM.png";
+        stringstream imgEat;
+        imgEat << output_dir.str().c_str() << "/eatSOM.png";
+        stringstream imgPC;
+        imgPC << output_dir.str().c_str() << "/pcSOM.png";
+        stringstream imgPhone;
+        imgPhone << output_dir.str().c_str() << "/phoneSOM.png";
+        
+        imwrite(imgTalk.str().c_str(),talk.map);
+        imwrite(imgEat.str().c_str(), eat.map);
+        imwrite(imgPC.str().c_str(),pc.map);
+        imwrite(imgPhone.str().c_str(), phone.map);
+        
+        imshow("talkSOM", talk.map);
+        imshow("eatSOM", eat.map);
+        imshow("pcSOM", pc.map);
+        imshow("phoneSOM", phone.map);
+        
+        return 0;
+    }
     
-    talk.visualize();
-    eat.visualize();
-    pc.visualize();
-    phone.visualize();
-    
-    stringstream imgTalk;
-    imgTalk << output_dir.str().c_str() << "/talkSOM.png";
-    stringstream imgEat;
-    imgEat << output_dir.str().c_str() << "/eatSOM.png";
-    stringstream imgPC;
-    imgPC << output_dir.str().c_str() << "/pcSOM.png";
-    stringstream imgPhone;
-    imgPhone << output_dir.str().c_str() << "/phoneSOM.png";
-    
-    imwrite(imgTalk.str().c_str(),talk.map);
-    imwrite(imgEat.str().c_str(), eat.map);
-    imwrite(imgPC.str().c_str(),pc.map);
-    imwrite(imgPhone.str().c_str(), phone.map);
-    
-    imshow("talkSOM", talk.map);
-    imshow("eatSOM", eat.map);
-    imshow("pcSOM", pc.map);
-    imshow("phoneSOM", phone.map);
-    //waitKey(0);
+    else if(yn != 'y' )
+        return 0;
     
     //---------------show & write png file---------------end
     
@@ -156,5 +188,4 @@ int main(int argc, const char * argv[])
 //        waitKey(1);
 //    }
     
-    return 0;
 }
